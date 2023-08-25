@@ -160,7 +160,7 @@
       </sensor>
     </link>
 
-    <link name="wheel_left_link">
+    <link name="left_wheel_link">
 
       <inertial>
         <pose>0 0.08 0.023 -1.57 0 0</pose>
@@ -175,7 +175,7 @@
         <mass>2.8498940e-02</mass>
       </inertial>
 
-      <collision name="wheel_left_collision">
+      <collision name="left_wheel_collision">
         <pose>0 0.08 0.023 -1.57 0 0</pose>
         <geometry>
           <cylinder>
@@ -207,7 +207,7 @@
         </surface>
       </collision>
 
-      <visual name="wheel_left_visual">
+      <visual name="left_wheel_visual">
         <pose>0 0.08 0.023 0 0 0</pose>
         <geometry>
           <mesh>
@@ -223,7 +223,7 @@
       </visual>
     </link>
 
-    <link name="wheel_right_link">
+    <link name="right_wheel_link">
 
       <inertial>
         <pose>0.0 -0.08 0.023 -1.57 0 0</pose>
@@ -238,7 +238,7 @@
         <mass>2.8498940e-02</mass>
       </inertial>
 
-      <collision name="wheel_right_collision">
+      <collision name="right_wheel_collision">
         <pose>0.0 -0.08 0.023 -1.57 0 0</pose>
         <geometry>
           <cylinder>
@@ -270,7 +270,7 @@
         </surface>
       </collision>
 
-      <visual name="wheel_right_visual">
+      <visual name="right_wheel_visual">
         <pose>0.0 -0.08 0.023 0 0 0</pose>
         <geometry>
           <mesh>
@@ -326,18 +326,18 @@
       <pose>0.0 0.0 0.010 0 0 0</pose>
     </joint>
 
-    <joint name="wheel_left_joint" type="revolute">
+    <joint name="left_wheel_joint" type="revolute">
       <parent>base_link</parent>
-      <child>wheel_left_link</child>
+      <child>left_wheel_link</child>
       <pose>0.0 0.08 0.023 -1.57 0 0</pose>
       <axis>
         <xyz>0 0 1</xyz>
       </axis>
     </joint>
 
-    <joint name="wheel_right_joint" type="revolute">
+    <joint name="right_wheel_joint" type="revolute">
       <parent>base_link</parent>
-      <child>wheel_right_link</child>
+      <child>right_wheel_link</child>
       <pose>0.0 -0.08 0.023 -1.57 0 0</pose>
       <axis>
         <xyz>0 0 1</xyz>
@@ -371,6 +371,30 @@
 
     <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
       <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
+      <left_joint>left_wheel_joint</left_joint>
+      <right_joint>right_wheel_joint</right_joint>
+
+      <wheel_separation>0.16</wheel_separation>
+      <wheel_radius>0.033</wheel_radius>
+
+      <topic>cmd_vel</topic>
+      <odom_topic>odom</odom_topic>
+      <tf_topic>tf</tf_topic>
+
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_footprint</child_frame_id>
+
+      <max_linear_acceleration>1</max_linear_acceleration>
+      <min_linear_acceleration>-1</min_linear_acceleration>
+      <max_angular_acceleration>2</max_angular_acceleration>
+      <min_angular_acceleration>-2</min_angular_acceleration>
+      <max_linear_velocity>0.5</max_linear_velocity>
+      <min_linear_velocity>-0.5</min_linear_velocity>
+      <max_angular_velocity>1</max_angular_velocity>
+      <min_angular_velocity>-1</min_angular_velocity>
     </plugin>
   </model>
 </sdf>
