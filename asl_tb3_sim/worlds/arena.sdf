@@ -84,7 +84,7 @@
           </material>
         </visual>
       </link>
-      <pose>-3.5 -3 0.5 0 0 -1.40565</pose>
+      <pose>-3.5 -3 0 0 0 -1.40565</pose>
     </model>
 
     <model name='wall_1'>
@@ -110,7 +110,7 @@
           </material>
         </visual>
       </link>
-      <pose>0.5 -5 0.5 0 -0 0.2783</pose>
+      <pose>0.5 -5 0 0 -0 0.2783</pose>
     </model>
     <model name='wall_2'>
       <static>1</static>
@@ -135,7 +135,7 @@
           </material>
         </visual>
       </link>
-      <pose>4.5 -1 0.5 0 -0 1.40565</pose>
+      <pose>4.5 -1 0 0 -0 1.40565</pose>
     </model>
     <model name='wall_3'>
       <static>1</static>
@@ -160,7 +160,7 @@
           </material>
         </visual>
       </link>
-      <pose>3 3 0.5 0 -0 2.67794</pose>
+      <pose>3 3 0 0 -0 2.67794</pose>
     </model>
     <model name='wall_4'>
       <static>1</static>
@@ -185,7 +185,7 @@
           </material>
         </visual>
       </link>
-      <pose>-1.5 2 0.5 0 0 -2.46685</pose>
+      <pose>-1.5 2 0 0 0 -2.46685</pose>
     </model>
     <model name='wall_5'>
       <static>1</static>
@@ -210,7 +210,7 @@
           </material>
         </visual>
       </link>
-      <pose>0 -2 0.5 0 0 -0.785398</pose>
+      <pose>0 -2 0 0 0 -0.785398</pose>
     </model>
 
     <gravity>0 0 -9.8</gravity>
