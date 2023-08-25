@@ -1,65 +1,23 @@
-
-<sdf version='1.6'>
+<sdf version='1.9'>
   <world name='default'>
+
     <light name='sun' type='directional'>
       <cast_shadows>1</cast_shadows>
-      <pose frame=''>0 0 10 0 -0 0</pose>
+      <pose>0 0 10 0 -0 0</pose>
       <diffuse>0.8 0.8 0.8 1</diffuse>
-      <specular>0.1 0.1 0.1 1</specular>
+      <specular>0.2 0.2 0.2 1</specular>
       <attenuation>
         <range>1000</range>
         <constant>0.9</constant>
         <linear>0.01</linear>
         <quadratic>0.001</quadratic>
       </attenuation>
-      <direction>-0.5 0.5 -1</direction>
+      <direction>0.5 -0.5 -1</direction>
     </light>
-    <model name='ground_plane'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <plane>
-              <normal>0 0 1</normal>
-              <size>100 100</size>
-            </plane>
-          </geometry>
-          <surface>
-            <friction>
-              <ode>
-                <mu>100</mu>
-                <mu2>50</mu2>
-              </ode>
-              <torsional>
-                <ode/>
-              </torsional>
-            </friction>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name='visual'>
-          <cast_shadows>0</cast_shadows>
-          <geometry>
-            <plane>
-              <normal>0 0 1</normal>
-              <size>100 100</size>
-            </plane>
-          </geometry>
-          <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Grey</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-      </link>
-    </model>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Ground Plane</uri>
+    </include>
 
     <model name='wall_0'>
       <static>1</static>
@@ -78,14 +36,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.0 1.0668021336 0 0 0 1.57079632679</pose>
+      <pose>0.0 1.0668021336 0 0 0 1.57079632679</pose>
     </model>
 
     <model name='wall_1'>
@@ -105,14 +62,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.0223770055039 2.2748871196 0 0 0 1.41371669412</pose>
+      <pose>0.0223770055039 2.2748871196 0 0 0 1.41371669412</pose>
     </model>
 
     <model name='wall_2'>
@@ -132,14 +88,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.109694610311 2.54362307442 0 0 0 1.09955742876</pose>
+      <pose>0.109694610311 2.54362307442 0 0 0 1.09955742876</pose>
     </model>
 
     <model name='wall_3'>
@@ -159,14 +114,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.275782564389 2.77222353162 0 0 0 0.785398163397</pose>
+      <pose>0.275782564389 2.77222353162 0 0 0 0.785398163397</pose>
     </model>
 
     <model name='wall_4'>
@@ -186,14 +140,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.50438302159 2.9383114857 0 0 0 0.471238898038</pose>
+      <pose>0.50438302159 2.9383114857 0 0 0 0.471238898038</pose>
     </model>
 
     <model name='wall_5'>
@@ -213,14 +166,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.77311897641 3.02562909051 0 0 0 0.157079632679</pose>
+      <pose>0.77311897641 3.02562909051 0 0 0 0.157079632679</pose>
     </model>
 
     <model name='wall_6'>
@@ -240,14 +192,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>2.28600457201 3.04800609601 0 0 0 0.0</pose>
+      <pose>2.28600457201 3.04800609601 0 0 0 0.0</pose>
     </model>
 
     <model name='wall_7'>
@@ -267,14 +218,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>3.65760731521 1.52400304801 0 0 0 -1.57079632679</pose>
+      <pose>3.65760731521 1.52400304801 0 0 0 -1.57079632679</pose>
     </model>
 
     <model name='wall_8'>
@@ -294,14 +244,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>1.82880365761 0.0 0 0 0 3.14159265359</pose>
+      <pose>1.82880365761 0.0 0 0 0 3.14159265359</pose>
     </model>
 
     <model name='wall_9'>
@@ -321,14 +270,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.558801117602 0.939801879604 0 0 0 1.57079632679</pose>
+      <pose>0.558801117602 0.939801879604 0 0 0 1.57079632679</pose>
     </model>
 
     <model name='wall_10'>
@@ -348,14 +296,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>1.30810261621 1.32080264161 0 0 0 0.0</pose>
+      <pose>1.30810261621 1.32080264161 0 0 0 0.0</pose>
     </model>
 
     <model name='wall_11'>
@@ -375,14 +322,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>2.05740411481 0.939801879604 0 0 0 -1.57079632679</pose>
+      <pose>2.05740411481 0.939801879604 0 0 0 -1.57079632679</pose>
     </model>
 
     <model name='wall_12'>
@@ -402,14 +348,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>1.30810261621 0.558801117602 0 0 0 3.14159265359</pose>
+      <pose>1.30810261621 0.558801117602 0 0 0 3.14159265359</pose>
     </model>
 
     <model name='wall_13'>
@@ -429,14 +374,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.558801117602 1.94310388621 0 0 0 1.57079632679</pose>
+      <pose>0.558801117602 1.94310388621 0 0 0 1.57079632679</pose>
     </model>
 
     <model name='wall_14'>
@@ -456,14 +400,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.567503286409 2.1885475987 0 0 0 1.41371669412</pose>
+      <pose>0.567503286409 2.1885475987 0 0 0 1.41371669412</pose>
     </model>
 
     <model name='wall_15'>
@@ -483,14 +426,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.601460132723 2.29305602557 0 0 0 1.09955742876</pose>
+      <pose>0.601460132723 2.29305602557 0 0 0 1.09955742876</pose>
     </model>
 
     <model name='wall_16'>
@@ -510,14 +452,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.666049892642 2.38195620337 0 0 0 0.785398163397</pose>
+      <pose>0.666049892642 2.38195620337 0 0 0 0.785398163397</pose>
     </model>
 
     <model name='wall_17'>
@@ -537,14 +478,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.754950070443 2.44654596329 0 0 0 0.471238898038</pose>
+      <pose>0.754950070443 2.44654596329 0 0 0 0.471238898038</pose>
     </model>
 
     <model name='wall_18'>
@@ -564,14 +504,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>0.859458497317 2.4805028096 0 0 0 0.157079632679</pose>
+      <pose>0.859458497317 2.4805028096 0 0 0 0.157079632679</pose>
     </model>
 
     <model name='wall_19'>
@@ -591,14 +530,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>1.54940309881 2.48920497841 0 0 0 0.0</pose>
+      <pose>1.54940309881 2.48920497841 0 0 0 0.0</pose>
     </model>
 
     <model name='wall_20'>
@@ -618,14 +556,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>2.18440436881 2.38760477521 0 0 0 -1.57079632679</pose>
+      <pose>2.18440436881 2.38760477521 0 0 0 -1.57079632679</pose>
     </model>
 
     <model name='wall_21'>
@@ -645,14 +582,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>2.01930403861 2.10820421641 0 0 0 -2.31917437432</pose>
+      <pose>2.01930403861 2.10820421641 0 0 0 -2.31917437432</pose>
     </model>
 
     <model name='wall_22'>
@@ -672,14 +608,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>1.85420370841 1.84150368301 0 0 0 -1.57079632679</pose>
+      <pose>1.85420370841 1.84150368301 0 0 0 -1.57079632679</pose>
     </model>
 
     <model name='wall_23'>
@@ -699,14 +634,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>1.206502413 1.75260350521 0 0 0 3.14159265359</pose>
+      <pose>1.206502413 1.75260350521 0 0 0 3.14159265359</pose>
     </model>
 
     <model name='wall_24'>
@@ -726,14 +660,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>2.87020574041 2.48920497841 0 0 0 0.0</pose>
+      <pose>2.87020574041 2.48920497841 0 0 0 0.0</pose>
     </model>
 
     <model name='wall_25'>
@@ -753,14 +686,13 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>2.87020574041 0.558801117602 0 0 0 3.14159265359</pose>
+      <pose>2.87020574041 0.558801117602 0 0 0 3.14159265359</pose>
     </model>
 
     <model name='wall_26'>
@@ -780,58 +712,32 @@
             </box>
           </geometry>
           <material>
-            <script>
-              <name>Gazebo/White</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-            </script>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>.1 .1 .1 .5</specular>
           </material>
         </visual>
       </link>
-      <pose frame=''>2.61620523241 1.52400304801 0 0 0 1.57079632679</pose>
+      <pose>2.61620523241 1.52400304801 0 0 0 1.57079632679</pose>
     </model>
 
-
-    
     <model name='Stop Sign'>
       <link name='link'>
-        <collision name='collision'>
+        <collision name='stopsign_collision'>
           <geometry>
             <mesh>
-              <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-              <scale>.2 .2 .2</scale>
+              <uri>stop_sign/stopsign.obj</uri>
+              <scale>.3 .3 .3</scale>
             </mesh>
           </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode>
-                <mu>0.2</mu>
-                <mu2>0.2</mu2>
-              </ode>
-            </friction>
-          </surface>
         </collision>
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>model://stop_sign/meshes/stop_sign.dae</uri>
-              <scale>.2 .2 .2</scale>
+              <uri>stop_sign/stopsign.obj</uri>
+              <scale>.3 .3 .3</scale>
             </mesh>
           </geometry>
-          <material>
-            <script>
-              <uri>model://stop_sign/materials/scripts</uri>
-              <uri>model://stop_sign/materials/textures</uri>
-              <name>StopSign/Diffuse</name>
-            </script>
-          </material>
         </visual>
         <self_collide>0</self_collide>
         <inertial>
@@ -848,9 +754,9 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>3.55 1.4 0.0 0.0 0.0 3.14159</pose>
+      <pose>3.55 1.4 -.1 1.570796 0 3.141593</pose>
     </model>
-
+    
     <model name='flag'>
       <link name='plate'>
         <pose>0 0 0.2425 0 0 0</pose>
@@ -884,6 +790,9 @@
             </box>
           </geometry>
           <material>
+            <ambient>1 0.1 0.1 1</ambient>
+            <diffuse>1 0.1 0.1 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
           </material>
         </visual>
         <self_collide>0</self_collide>
@@ -935,6 +844,9 @@
             </cylinder>
           </geometry>
           <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
           </material>
         </visual>
         <self_collide>0</self_collide>
@@ -985,6 +897,9 @@
             </cylinder>
           </geometry>
           <material>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.1 0.1 0.1 1</diffuse>
+            <specular>0.01 0.01 0.01 1</specular>
           </material>
         </visual>
         <self_collide>0</self_collide>
@@ -1012,7 +927,7 @@
         <child>plate</child>
         <pose>0 0 0.1 0 0 0</pose>
       </joint>
-      <pose frame=''>3.35 1.4 0.01 0.0 0.0 3.14159</pose>
+      <pose>2.7 1.4 0.01 0.0 0.0 3.14159</pose>
     </model>
 
 
@@ -1036,28 +951,9 @@
       <elevation>0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
-    <state world_name='default'>
-      <sim_time>0 0</sim_time>
-      <real_time>0 0</real_time>
-      <wall_time>1487236332 268614325</wall_time>
-      <iterations>0</iterations>
-      <model name='ground_plane'>
-        <pose frame=''>0 0 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <light name='sun'>
-        <pose frame=''>0 0 10 0 -0 0</pose>
-      </light>
-    </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>5 -5 2 0 0.275643 2.35619</pose>
+        <pose>5 -5 2 0 0.275643 2.35619</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

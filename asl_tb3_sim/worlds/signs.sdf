@@ -30,7 +30,7 @@
           <geometry>
             <mesh>
               <uri>stop_sign/stopsign.obj</uri>
-              <scale>.6 .6 .6</scale>
+              <scale>.3 .3 .3</scale>
             </mesh>
           </geometry>
         </collision>
@@ -38,7 +38,7 @@
           <geometry>
             <mesh>
               <uri>stop_sign/stopsign.obj</uri>
-              <scale>.6 .6 .6</scale>
+              <scale>.3 .3 .3</scale>
             </mesh>
           </geometry>
         </visual>
@@ -57,7 +57,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose>.15 -2 0 1.570796 0 3.141593</pose>
+      <pose>.15 -2 -.1 1.570796 0 3.141593</pose>
     </model>
 
     <model name='cardboard_box1'>

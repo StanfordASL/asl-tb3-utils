@@ -8,7 +8,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 
-install(DIRECTORY launch models worlds
+install(DIRECTORY launch models worlds meshes
         DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
