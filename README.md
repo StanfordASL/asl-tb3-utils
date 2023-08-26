@@ -22,6 +22,7 @@ ASL Turtlebot 3 ROS2 utility packages
     rosdep update && rosdep install --from-paths ~/tb_ws/src -r -i -y
 
     # build the code (might take a few minutes)
+    export GZ_VERSION=garden
     cd ~/tb_ws && colcon build --symlink-install
 
     # include the setup script (replace bash with zsh if using zsh)
