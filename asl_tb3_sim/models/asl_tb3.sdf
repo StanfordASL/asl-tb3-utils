@@ -29,7 +29,7 @@
         <pose>-0.032 0 0 0 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://meshes/burger_base.dae</uri>
+            <uri>model://asl_tb3_sim/meshes/burger_base.dae</uri>
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -42,7 +42,7 @@
     </link>
 
     <link name="imu_link">
-      <sensor name="tb3_imu" type="imu">
+      <sensor name="imu" type="imu">
         <always_on>true</always_on>
         <update_rate>200</update_rate>
         <topic>imu</topic>
@@ -119,7 +119,7 @@
         <pose>-0.032 0 0.171 0 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://meshes/lds.dae</uri>
+            <uri>model://asl_tb3_sim/meshes/lds.dae</uri>
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -211,7 +211,7 @@
         <pose>0 0.08 0.023 0 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://meshes/tire.dae</uri>
+            <uri>model://asl_tb3_sim/meshes/tire.dae</uri>
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -274,7 +274,7 @@
         <pose>0.0 -0.08 0.023 0 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://meshes/tire.dae</uri>
+            <uri>model://asl_tb3_sim/meshes/tire.dae</uri>
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
@@ -361,7 +361,7 @@
     <joint name="lidar_joint" type="fixed">
       <parent>base_link</parent>
       <child>base_scan</child>
-      <pose>-0.032 0 0.171 0 0 0</pose>
+      <pose>-0.032 0 0.271 0 0 0</pose>
       <axis>
         <xyz>0 0 1</xyz>
       </axis>
@@ -385,7 +385,6 @@
 
       <topic>cmd_vel</topic>
       <odom_topic>odom</odom_topic>
-      <tf_topic>tf</tf_topic>
 
       <frame_id>odom</frame_id>
       <child_frame_id>base_footprint</child_frame_id>
@@ -402,7 +401,7 @@
 
     <!-- wheel joint states -->
     <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
-      <topic>joint_state</topic>
+      <topic>joint_states</topic>
       <joint_name>left_wheel_joint</joint_name>
       <joint_name>right_wheel_joint</joint_name>
     </plugin>
