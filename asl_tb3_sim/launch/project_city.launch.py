@@ -12,7 +12,7 @@ def generate_launch_description():
     world = PathJoinSubstitution([
         FindPackageShare("asl_tb3_sim"),
         "worlds",
-        "project_city.world",
+        "project_city.sdf",
     ])
 
     return LaunchDescription([
@@ -26,6 +26,7 @@ def generate_launch_description():
                 "world": world,
                 "x_init": "3.15",
                 "y_init": "1.6",
+                "use_sim_time": use_sim_time,
             }.items(),
         )
     ])

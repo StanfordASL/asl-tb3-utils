@@ -14,8 +14,9 @@ def generate_launch_description():
     x_init = LaunchConfiguration("x_init", default="-2.0")
     y_init = LaunchConfiguration("y_init", default="-0.5")
 
-    world = LaunchConfiguration("world", default=
-        PathJoinSubstitution([
+    world = LaunchConfiguration(
+        "world",
+        default=PathJoinSubstitution([
             FindPackageShare("asl_tb3_sim"),
             "worlds",
             "turtlebot3_world.sdf",
