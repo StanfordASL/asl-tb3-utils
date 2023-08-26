@@ -44,7 +44,7 @@
     <link name="imu_link">
       <sensor name="imu" type="imu">
         <always_on>true</always_on>
-        <update_rate>200</update_rate>
+        <update_rate>20</update_rate>
         <topic>imu</topic>
         <imu>
           <angular_velocity>
@@ -135,7 +135,7 @@
         <pose>-0.032 0 0.271 0 0 0</pose>
         <always_on>true</always_on>
         <visualize>true</visualize>
-        <update_rate>100</update_rate>
+        <update_rate>10</update_rate>
         <topic>lidar</topic>
         <ray>
           <scan>
@@ -385,6 +385,7 @@
 
       <topic>cmd_vel</topic>
       <odom_topic>odom</odom_topic>
+      <odom_publish_frequency>20</odom_publish_frequency>
 
       <frame_id>odom</frame_id>
       <child_frame_id>base_footprint</child_frame_id>
