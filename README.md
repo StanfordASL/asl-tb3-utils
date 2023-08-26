@@ -5,7 +5,22 @@ ASL Turtlebot 3 ROS2 utility packages
 1. Setup Ubuntu 22.04 following the guides for [MacOS]() or [Windows]() (TODO: empty link).
 2. Install ROS2 **Humble** on Ubuntu 22.04 following this
    [guide](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html).
-3. Install Gazebo **Garden** following this [guide](https://gazebosim.org/docs/garden/install_ubuntu).
+   - These, and the following, installation instructions require opening a terminal, and copy-pasting commands into that terminal. In Ubuntu, use CTRL+ALT+T to open the default terminal. Remember to copy all commands exactly and in order, or you may encounter errors! 
+   - On the **Install ROS Packages** step, choose the Desktop Install (`sudo apt install ros-humble-desktop`).
+3. Install Gazebo **Garden** (ignore the comment lines starting with `#`).
+   ```sh
+   # Install dependencies
+   sudo apt-get update
+   sudo apt-get install lsb-release wget gnupg
+
+   # Setup Gazebo keys and sources
+   sudo wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+   
+   # Install Gazebo
+   sudo apt-get update
+   sudo apt-get install gz-garden
+   ```
 4. Set up a ROS2 workspace by running the following scripts in a Ubuntu 22.04 terminal
    (ignore the comment lines starting with `#`)
     ```sh
@@ -29,7 +44,16 @@ ASL Turtlebot 3 ROS2 utility packages
     echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
     echo "source \$HOME/tb_ws/install/local_setup.bash" >> ~/.bashrc
     ```
+5. Try starting ROS and Gazebo with a simulated TurtleBot to verify that everything is installed correctly. Use this command: 
+   ```sh
+   ros2 launch asl_tb3_sim root.launch.py 
+   ```
+   To close the simulator and ROS session after testing your installation enter CTRL+C in the terminal session where you entered the command above.
 
 ## Development Guide
 TODO
+
+## F.A.Q.
+- When I run Gazebo a bunch of errors print that say ``[ruby $(which gz) sim-2] [Err] [SDFFeatures.cc:843] The geometry element of collision [left_hand] couldn't be created``, should I be worried?
+   - These are a known issue with Gazebo, and are safe to ignore.
 
