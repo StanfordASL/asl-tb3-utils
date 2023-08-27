@@ -18,8 +18,9 @@ sudo apt-get -qq update
 sudo apt-get install gz-garden -y
 
 echo "Setting up ROS2 workspace..."
-cd ~/tb_ws/src
+mkdir -p ~/tb_ws/src && cd ~/tb_ws/src
 git clone -b humble https://github.com/gazebosim/ros_gz.git
+git clone https://github.com/StanfordASL/asl-tb3-utils.git
 
 echo "Installing ROS2 dependencies..."
 source /opt/ros/humble/setup.zsh
@@ -32,6 +33,5 @@ GZ_VERSION=garden colcon build --symlink-install
 echo "Updating ~/.zshrc to include setup scripts"
 echo "source /opt/ros/humble/setup.zsh" >> ~/.zshrc
 echo "source \$HOME/tb_ws/install/local_setup.zsh" >> ~/.zshrc
-source ~/.zshrc
 
 echo "Done!"
