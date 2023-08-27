@@ -27,6 +27,9 @@ ASL Turtlebot 3 ROS2 utility packages
     ```
 5. Set up a ROS2 workspace by running the following scripts (ignore the comment lines starting with `#`)
     ```sh
+    # install apt depedencies
+    sudo apt install git
+
     # create the turtlebot workspace
     mkdir -p ~/tb_ws/src
 
