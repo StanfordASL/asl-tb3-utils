@@ -25,8 +25,7 @@ ASL Turtlebot 3 ROS2 utility packages
     ```sh
     sudo rosdep init
     ```
-5. Set up a ROS2 workspace by running the following scripts in a Ubuntu 22.04 terminal
-   (ignore the comment lines starting with `#`)
+5. Set up a ROS2 workspace by running the following scripts (ignore the comment lines starting with `#`)
     ```sh
     # create the turtlebot workspace
     mkdir -p ~/tb_ws/src
