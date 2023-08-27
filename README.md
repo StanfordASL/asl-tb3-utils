@@ -21,7 +21,11 @@ ASL Turtlebot 3 ROS2 utility packages
    sudo apt-get update
    sudo apt-get install gz-garden
    ```
-4. Set up a ROS2 workspace by running the following scripts in a Ubuntu 22.04 terminal
+4. Initialize `rosdep` (can skip this step if done earlier)
+    ```sh
+    sudo rosdep init
+    ```
+5. Set up a ROS2 workspace by running the following scripts in a Ubuntu 22.04 terminal
    (ignore the comment lines starting with `#`)
     ```sh
     # create the turtlebot workspace
@@ -43,8 +47,9 @@ ASL Turtlebot 3 ROS2 utility packages
     # include the setup script (replace bash with zsh if using zsh)
     echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
     echo "source \$HOME/tb_ws/install/local_setup.bash" >> ~/.bashrc
+    source ~/.bashrc
     ```
-5. Try starting ROS and Gazebo with a simulated TurtleBot to verify that everything is installed correctly. Use this command: 
+6. Try starting ROS and Gazebo with a simulated TurtleBot to verify that everything is installed correctly. Use this command:
    ```sh
    ros2 launch asl_tb3_sim root.launch.py 
    ```
