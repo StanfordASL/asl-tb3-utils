@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
 
 echo "Installing apt dependencies..."
-sudo apt -qq update && sudo apt install git curl software-properties-common lsb-release wget gnupg -y
+sudo apt -qq update && sudo apt upgrade -y
+sudo apt install git curl software-properties-common lsb-release wget gnupg -y
 
 echo "Installing ROS2 Humble..."
 sudo add-apt-repository universe
