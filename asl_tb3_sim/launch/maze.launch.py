@@ -7,8 +7,6 @@ from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
-    use_sim_time = LaunchConfiguration("use_sim_time", default="true")
-
     world = PathJoinSubstitution([
         FindPackageShare("asl_tb3_sim"),
         "worlds",
@@ -26,7 +24,6 @@ def generate_launch_description():
                 "world": world,
                 "x_init": "1.0",
                 "y_init": "-0.5",
-                "use_sim_time": use_sim_time,
             }.items(),
         )
     ])

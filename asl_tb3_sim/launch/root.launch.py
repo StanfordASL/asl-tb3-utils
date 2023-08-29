@@ -3,25 +3,22 @@
 import os
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
-    use_sim_time = LaunchConfiguration("use_sim_time", default="true")
-    x_init = LaunchConfiguration("x_init", default="-2.0")
-    y_init = LaunchConfiguration("y_init", default="-0.5")
+    x_init = LaunchConfiguration("x_init")
+    y_init = LaunchConfiguration("y_init")
+    world = LaunchConfiguration("world")
 
-    world = LaunchConfiguration(
-        "world",
-        default=PathJoinSubstitution([
-            FindPackageShare("asl_tb3_sim"),
-            "worlds",
-            "turtlebot3_world.sdf",
-        ])
-    )
+    default_world = PathJoinSubstitution([
+        FindPackageShare("asl_tb3_sim"),
+        "worlds",
+        "turtlebot3_world.sdf",
+    ])
 
     this_dir = FindPackageShare("asl_tb3_sim")
 
@@ -32,7 +29,7 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         parameters=[
-            {"use_sim_time": use_sim_time},
+            {"use_sim_time": True},
             {"robot_description": robot_desc},
         ],
     )
@@ -81,11 +78,25 @@ def generate_launch_description():
         arguments=["0", "0", "0", "0", "0", "0", "1", "imu_link", "asl_tb3/imu_link/imu"],
     )
 
+    slam = Node(
+       parameters=[
+           PathJoinSubstitution([FindPackageShare("asl_tb3_driver"), "configs", "slam_params.yaml"]),
+           {"use_sim_time": True},
+       ],
+       package='slam_toolbox',
+       executable='async_slam_toolbox_node',
+       name='slam_toolbox',
+    )
+
     return LaunchDescription([
+        DeclareLaunchArgument("x_init", default_value="-2.0"),
+        DeclareLaunchArgument("y_init", default_value="-0.5"),
+        DeclareLaunchArgument("world", default_value=default_world),
         robot_state_pub,
         gz_launch,
         spawn_turtlebot,
         bridge,
         lidar_tf,
         imu_tf,
+        slam,
     ])
