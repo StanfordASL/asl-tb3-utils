@@ -9,7 +9,7 @@ from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 
 from asl_tb3_msgs.msg import TurtleBotStateStamped
-from asl_tb3_lib.tf_utils import quaternion_to_yaw
+from asl_tb3_lib.tf_utils import transform_to_state
 
 
 class StateRelayNode(Node):
@@ -29,9 +29,7 @@ class StateRelayNode(Node):
 
             tb_state_stamped = TurtleBotStateStamped()
             tb_state_stamped.header = t.header
-            tb_state_stamped.state.x = t.transform.translation.x
-            tb_state_stamped.state.y = t.transform.translation.y
-            tb_state_stamped.state.theta = quaternion_to_yaw(t.transform.rotation)
+            tb_state_stamped.state = transform_to_state(t.transform)
             self.state_pub.publish(tb_state_stamped)
         except TransformException as e:
             pass
