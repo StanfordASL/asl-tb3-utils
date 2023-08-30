@@ -21,6 +21,7 @@ sudo apt install gz-garden -y
 echo "Setting up ROS2 workspace..."
 mkdir -p ~/tb_ws/src && cd ~/tb_ws/src
 git clone -b humble https://github.com/gazebosim/ros_gz.git
+git clone https://github.com/StanfordASL/asl-tb3-driver.git
 git clone https://github.com/StanfordASL/asl-tb3-utils.git
 
 echo "Installing ROS2 dependencies..."

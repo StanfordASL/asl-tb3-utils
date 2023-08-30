@@ -36,6 +36,7 @@ ASL Turtlebot 3 ROS2 utility packages
     # clone the sources
     cd ~/tb_ws/src
     git clone -b humble https://github.com/gazebosim/ros_gz.git
+    git clone https://github.com/StanfordASL/asl-tb3-driver.git
     git clone https://github.com/StanfordASL/asl-tb3-utils.git
 
     # install dependencies
