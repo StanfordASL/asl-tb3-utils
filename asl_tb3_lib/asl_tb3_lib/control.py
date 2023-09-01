@@ -54,7 +54,7 @@ class BaseController(Node):
             self.get_logger().debug("Cannot compute control")
             return
 
-        control = self.compute_control(self.state, self.get_clock().now())
+        control = self.compute_control()
 
         v_max = self.v_max
         om_max = self.om_max
