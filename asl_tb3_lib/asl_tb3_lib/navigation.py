@@ -8,9 +8,9 @@ from rclpy.duration import Duration
 from scipy.interpolate import splev
 
 from asl_tb3_msgs.msg import TurtleBotState, TurtleBotControl
-from control import BaseController
-from grids import snap_to_grid, StochOccupancyGrid2D
-from math_utils import distance_linear, distance_angular
+from .control import BaseController
+from .grids import snap_to_grid, StochOccupancyGrid2D
+from .math_utils import distance_linear, distance_angular
 
 
 @dataclass(frozen=True)
@@ -58,8 +58,6 @@ class BaseNavigator(BaseController):
         self.smoothed_path_pub = self.create_publisher(Path, "/smoothed_path", 10)
 
         # dynamic parameters
-        self.declare_parameter("v_max", 0.2)    # maximum linear velocity
-        self.declare_parameter("om_max", 0.4)   # maximum angular velocity
         self.declare_parameter("v_des", 0.12)   # desired cruising velocity
         self.declare_parameter("theta_start_thresh", 0.05)  # threshold for heading controller
         self.declare_parameter("start_pos_thresh", 0.2)     # replan if at least this far from planned starting position
@@ -176,7 +174,7 @@ class BaseNavigator(BaseController):
 
     def compute_heading_control(self) -> TurtleBotControl:
         kp = 2.0  # control gain for heading controller
-        om_max = self.get_parameter("om_max").value
+        om_max = self.om_max
 
         om = kp * err
         om = np.clip(om, -om_max, om_max)

@@ -8,7 +8,7 @@ from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 
 from asl_tb3_msgs.msg import TurtleBotState, TurtleBotControl
-from tf_utils import transform_to_state
+from .tf_utils import transform_to_state
 
 
 class BaseController(Node):
@@ -24,6 +24,17 @@ class BaseController(Node):
 
         self.cmd_vel_pub = self.create_publisher(Twist, "/cmd_vel", 10)
         self.control_timer = self.create_timer(0.1, self.publish_control)  # 10 Hz control loop
+
+        self.declare_parameter("v_max", 0.2)    # maximum linear velocity
+        self.declare_parameter("om_max", 0.4)   # maximum angular velocity
+
+    @property
+    def v_max(self) -> float:
+        return self.get_parameter("v_max").value
+
+    @property
+    def om_max(self) -> float:
+        return self.get_parameter("om_max").value
 
     def try_get_latest_pose(self) -> None:
         try:
@@ -45,9 +56,12 @@ class BaseController(Node):
 
         control = self.compute_control(self.state, self.get_clock().now())
 
+        v_max = self.v_max
+        om_max = self.om_max
+
         twist = Twist()
-        twist.linear.x = control.v
-        twist.angular.z = control.omega
+        twist.linear.x = np.clip(control.v, -v_max, v_max)
+        twist.angular.z = np.clip(control.omega, -om_max, om_max)
         self.cmd_vel_pub.publish(twist)
 
     def can_compute_control(self) -> bool:
