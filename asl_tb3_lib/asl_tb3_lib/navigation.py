@@ -176,6 +176,7 @@ class BaseNavigator(BaseController):
         kp = 2.0  # control gain for heading controller
         om_max = self.om_max
 
+        err = wrap_angle(self.plan.init.theta - self.state.theta)
         om = kp * err
         om = np.clip(om, -om_max, om_max)
 
