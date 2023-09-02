@@ -8,9 +8,9 @@ from rclpy.duration import Duration
 from scipy.interpolate import splev
 
 from asl_tb3_msgs.msg import TurtleBotState, TurtleBotControl
-from .control import BaseController
-from .grids import snap_to_grid, StochOccupancyGrid2D
-from .math_utils import distance_linear, distance_angular
+from asl_tb3_lib.control import BaseController
+from asl_tb3_lib.grids import snap_to_grid, StochOccupancyGrid2D
+from asl_tb3_lib.math_utils import distance_linear, distance_angular
 
 
 @dataclass(frozen=True)
