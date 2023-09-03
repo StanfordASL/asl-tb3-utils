@@ -48,7 +48,7 @@ class StochOccupancyGrid2D(object):
         self.resolution = resolution
         self.size_xy = size_xy
         self.origin_xy = origin_xy
-        self.probs = np.reshape(np.asarray(probs), (height, width))
+        self.probs = np.reshape(np.asarray(probs), (size_xy[1], size_xy[0]))
         self.window_size = window_size
         self.thresh = thresh
 

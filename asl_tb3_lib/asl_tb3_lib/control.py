@@ -51,7 +51,8 @@ class BaseController(Node):
             return
 
         if not self.can_compute_control():
-            self.get_logger().debug("Cannot compute control")
+            self.get_logger().debug("Cannot compute control: publishing zero control")
+            self.cmd_vel_pub.publish(Twist())
             return
 
         control = self.compute_control()
