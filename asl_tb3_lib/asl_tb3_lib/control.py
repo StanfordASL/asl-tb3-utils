@@ -12,13 +12,15 @@ from asl_tb3_lib.tf_utils import transform_to_state
 
 
 class BaseController(Node):
+    """ BaseController: abstract controller class """
 
     def __init__(self, node_name: str) -> None:
         super().__init__(node_name)
 
-        self.state_ready = False
+        self.state_ready = False        # set to true when the first pose message comes in
         self.state = TurtleBotState()
 
+        # TF datastructure for getting relative poses from the TF tree
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
@@ -30,13 +32,24 @@ class BaseController(Node):
 
     @property
     def v_max(self) -> float:
+        """ Get real-time parameter value of maximum velocity
+
+        Returns:
+            float: latest parameter value of maximum velocity
+        """
         return self.get_parameter("v_max").value
 
     @property
     def om_max(self) -> float:
+        """ Get real-time parameter value of maximum angular velocity (omega)
+
+        Returns:
+            float: latest parameter value of maximum angular velocity
+        """
         return self.get_parameter("om_max").value
 
     def try_get_latest_pose(self) -> None:
+        """ Try setting self.state with the latest pose, no-op if latest pose is not available """
         try:
             t = self.tf_buffer.lookup_transform("map", "base_footprint", Time())
             self.state = transform_to_state(t.transform)
@@ -45,6 +58,7 @@ class BaseController(Node):
             pass
 
     def publish_control(self) -> None:
+        """ Main loop for publishing control commands """
         self.try_get_latest_pose()
         if not self.state_ready:
             self.get_logger().debug("Latest pose not yet ready")
@@ -66,13 +80,33 @@ class BaseController(Node):
         self.cmd_vel_pub.publish(twist)
 
     def can_compute_control(self) -> bool:
+        """ Check whether or not control can be computed at the current time
+
+        NOTE: subclass can override this function
+
+        Returns:
+            bool: True if compute can be computed, False otherwise
+        """
         return True
 
     def compute_control(self) -> TurtleBotControl:
+        """ Compute control command at the current time
+
+        NOTE: subclass MUST override this function
+
+        Returns:
+            TurtleBotControl: control message
+        """
         raise NotImplementedError("Calling abstract function")
 
 
 class BasePoseStabilizer(BaseController):
+    """ Student can inherit from this class to build a pose stabilization controller node
+
+    This node takes target pose from /cmd_pose, and control the robot towards the target
+    pose using a pose stabilization controller
+    """
+
     def __init__(self, node_name: str = "pose_stabilizer") -> None:
         super().__init__(node_name)
 
@@ -83,6 +117,11 @@ class BasePoseStabilizer(BaseController):
             TurtleBotState, "/cmd_pose", self.cmd_pose_callback, 10)
 
     def cmd_pose_callback(self, msg: TurtleBotState) -> None:
+        """ Callback triggered when receiving a new target pose message
+
+        Args:
+            msg (TurtleBotState): target pose message
+        """
         if not self.goal_set or self.goal != msg:
             self.goal = msg
             self.goal_set = True
@@ -92,12 +131,25 @@ class BasePoseStabilizer(BaseController):
         return self.compute_control_with_goal(self.state, self.goal)
 
     def can_compute_control(self) -> bool:
+        """ Control can be computed only when a target pose is received
+
+        Returns:
+            bool: whether or not a target pose has been received
+        """
         return self.goal_set
 
     def compute_control_with_goal(self,
         state: TurtleBotState,
         goal: TurtleBotState
     ) -> TurtleBotControl:
-        raise NotImplementedError("You need to implement this!")
+        """ Compute control given current robot state and goal state
 
+        Args:
+            state (TurtleBotState): current robot state
+            goal (TurtleBotState): current goal state
+
+        Returns:
+            TurtleBotControl: control command
+        """
+        raise NotImplementedError("You need to implement this!")
 

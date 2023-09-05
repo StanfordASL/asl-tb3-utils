@@ -1,42 +1,38 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 import typing as T
 
 
-def snap_to_grid(data: np.ndarray, resolution: float) -> np.ndarray:
-    return resolution * np.round(data / resolution)
+def snap_to_grid(state: np.ndarray, resolution: float) -> np.ndarray:
+    """ Snap continuous coordinates to a finite-resolution grid
 
+    Args:
+        state (np.ndarray): a size-2 numpy array specifying the (x, y) coordinates
+        resolution (float): resolution of the grid
 
-# A 2D state space grid with a set of rectangular obstacles. The grid is fully deterministic
-class DetOccupancyGrid2D(object):
-    def __init__(self, width, height, obstacles):
-        self.width = width
-        self.height = height
-        self.obstacles = obstacles
+    Returns:
+        np.ndarray: state-vector snapped onto the specified grid
+    """
+    return resolution * np.round(state / resolution)
 
-    def is_free(self, x):
-        for obs in self.obstacles:
-            inside = True
-            for dim in range(len(x)):
-                if x[dim] < obs[0][dim] or x[dim] > obs[1][dim]:
-                    inside = False
-                    break
-            if inside:
-                return False
-        return True
-
-    def plot(self, fig_num=0):
-        fig = plt.figure(fig_num)
-        for obs in self.obstacles:
-            ax = fig.add_subplot(111, aspect='equal')
-            ax.add_patch(
-            patches.Rectangle(
-            obs[0],
-            obs[1][0]-obs[0][0],
-            obs[1][1]-obs[0][1],))
 
 class StochOccupancyGrid2D(object):
+    """ A stochastic occupancy grid derived from ROS2 map data
+
+    The probability of grid cell being occupied is computed by the joint probability of
+    any neighboring cell being occupied within some fixed window. For some examples of size-3
+    occupancy windows,
+
+    0.1 0.1 0.1
+    0.1 0.1 0.1  ->  1 - (1 - 0.1)**9 ~= 0.61
+    0.1 0.1 0.1
+
+    0.0 0.1 0.0
+    0.0 0.1 0.0  ->  1 - (1 - 0)**6 * (1 - 0.1)**3 ~= 0.27
+    0.0 0.1 0.0
+
+    The final occupancy probability is then converted to binary occupancy using a threshold
+    """
+
     def __init__(self,
         resolution: float,
         size_xy: np.ndarray,
@@ -45,6 +41,15 @@ class StochOccupancyGrid2D(object):
         probs: T.Sequence[float],
         thresh: float = 0.5
     ) -> None:
+        """
+        Args:
+            resolution (float): resolution of the map
+            size_xy (np.ndarray): size-2 integer array representing map size
+            origin_xy (np.ndarray): size-2 float array representing map origin coordinates
+            window_size (int): window size for computing occupancy probabilities
+            probs (T.Sequence[float]): map data
+            thresh (float): threshold for final binarization of occupancy probabilites
+        """
         self.resolution = resolution
         self.size_xy = size_xy
         self.origin_xy = origin_xy
@@ -53,8 +58,15 @@ class StochOccupancyGrid2D(object):
         self.thresh = thresh
 
     def is_free(self, state_xy: np.ndarray) -> bool:
-        # combine the probabilities of each cell by assuming independence
-        # of each estimation
+        """ Check whether a state is free or occupied
+
+        Args:
+            state_xy (np.ndarray): size-2 state vectory of (x, y) coordinate
+
+        Returns:
+            bool: True if free, False if occupied
+        """
+        # combine the probabilities of each cell by assuming independence of each estimation
         state_xy = snap_to_grid(state_xy, self.resolution)
         grid_xy = ((state_xy - self.origin_xy) / self.resolution).astype(int)
 
@@ -68,17 +80,3 @@ class StochOccupancyGrid2D(object):
 
         return (1. - p_total) < self.thresh
 
-    def plot(self, fig_num=0):
-        fig = plt.figure(fig_num)
-        pts = []
-        for i in range(self.probs.shape[0]):
-            for j in range(self.probs.shape[1]):
-                # convert i to (x,y)
-                x = j * self.resolution + self.origin_x
-                y = i * self.resolution + self.origin_y
-                if not self.is_free((x,y)):
-                    pts.append((x,y))
-        pts_array = np.array(pts)
-        plt.scatter(pts_array[:,0],pts_array[:,1],color="red",zorder=15,label='planning resolution')
-        plt.xlim([self.origin_x, self.width * self.resolution + self.origin_x])
-        plt.ylim([self.origin_y, self.height * self.resolution + self.origin_y])

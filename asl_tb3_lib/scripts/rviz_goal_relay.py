@@ -10,6 +10,11 @@ from asl_tb3_lib.tf_utils import pose_to_state
 
 
 class RVIZGoalRelay(Node):
+    """RVIZGoalRelay
+    Relay RVIZ Goal Pose to any channel specified in the 'output_channel' parameter.
+    This node also converts message from PoseStamped to TurtleBotState
+    """
+
     def __init__(self) -> None:
         super().__init__("rviz_goal_relay")
         output_channel = self.declare_parameter("output_channel", "/cmd_pose").value

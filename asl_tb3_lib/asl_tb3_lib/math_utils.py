@@ -5,7 +5,7 @@ import typing as T
 from asl_tb3_msgs.msg import TurtleBotState
 
 def wrap_angle(x: T.Union[float, np.ndarray]) -> T.Union[float, np.ndarray]:
-    """wrap angle (radians) to [-pi, pi]
+    """ Wrap angle (radians) to [-pi, pi]
 
     Args:
         x (T.Union[float, np.ndarray]): angle to be wrapped
@@ -16,7 +16,7 @@ def wrap_angle(x: T.Union[float, np.ndarray]) -> T.Union[float, np.ndarray]:
     return (x + math.pi) % (2 * math.pi) - math.pi
 
 def distance_linear(s1: TurtleBotState, s2: TurtleBotState) -> float:
-    """computer linear distance between two states
+    """ Computer linear distance between two states
 
     Args:
         s1 (TurtleBotState): s1
@@ -28,7 +28,7 @@ def distance_linear(s1: TurtleBotState, s2: TurtleBotState) -> float:
     return math.sqrt((s1.x - s2.x) ** 2 + (s1.y - s2.y) ** 2)
 
 def distance_angular(s1: TurtleBotState, s2: TurtleBotState) -> float:
-    """compute angular distance between two states
+    """ Compute angular distance between two states
 
     Args:
         s1 (TurtleBotState): s1

@@ -5,7 +5,7 @@ from asl_tb3_msgs.msg import TurtleBotState
 
 
 def quaternion_to_yaw(q: Quaternion) -> float:
-    """extract yaw rotation from a quaternion
+    """ Extract yaw rotation from a quaternion
 
     Args:
         q (Quaternion): q quaternion to convert from
@@ -16,7 +16,7 @@ def quaternion_to_yaw(q: Quaternion) -> float:
     return math.atan2(2. * q.w * q.z, q.w ** 2 - q.z ** 2)
 
 def yaw_to_quaternion(yaw: float) -> Quaternion:
-    """convert a yaw rotation to quaternion
+    """ Convert a yaw rotation to quaternion
 
     Args:
         yaw (float): yaw angle in [rads] (rotation about z-axis)
@@ -30,7 +30,7 @@ def yaw_to_quaternion(yaw: float) -> Quaternion:
     )
 
 def transform_to_state(t: Transform) -> TurtleBotState:
-    """convert geometry_msgs.msg.Transform to asl_tb3_msgs.msg.TurtleBotState
+    """ Convert geometry_msgs.msg.Transform to asl_tb3_msgs.msg.TurtleBotState
 
     Args:
         t (Transform): transform
@@ -45,7 +45,7 @@ def transform_to_state(t: Transform) -> TurtleBotState:
     )
 
 def state_to_transform(state: TurtleBotState) -> Transform:
-    """convert asl_tb3_msgs.msg.TurtleBotState to geometry_msgs.msg.Transform
+    """ Convert asl_tb3_msgs.msg.TurtleBotState to geometry_msgs.msg.Transform
 
     Args:
         state (TurtleBotState): state
@@ -61,7 +61,7 @@ def state_to_transform(state: TurtleBotState) -> Transform:
     return t
 
 def pose_to_state(p: Pose) -> TurtleBotState:
-    """convert geometry_msgs.msg.Pose to asl_tb3_msgs.msg.TurtleBotState
+    """ Convert geometry_msgs.msg.Pose to asl_tb3_msgs.msg.TurtleBotState
 
     Args:
         p (Pose): pose
@@ -76,7 +76,7 @@ def pose_to_state(p: Pose) -> TurtleBotState:
     )
 
 def state_to_pose(state: TurtleBotState) -> Pose:
-    """convert asl_tb3_msgs.msg.TurtleBotState to geometry_msgs.msg.Pose
+    """ Convert asl_tb3_msgs.msg.TurtleBotState to geometry_msgs.msg.Pose
 
     Args:
         state (TurtleBotState): state
