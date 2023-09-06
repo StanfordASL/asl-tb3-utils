@@ -17,3 +17,5 @@ echo "export LIBGL_ALWAYS_SOFTWARE=1" >> ~/.bashrc
 source ~/.bashrc
 ```
 
+## Next Steps
+Now that you're finished installing WSL Ubuntu you can return to the instructions in the main README for this repository and proceed with the installation of ROS and Gazebo.
