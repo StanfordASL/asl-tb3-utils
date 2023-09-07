@@ -62,6 +62,19 @@ ASL Turtlebot 3 ROS2 utility packages
 TODO
 
 ## F.A.Q.
-- When I run Gazebo a bunch of errors print that say ``[ruby $(which gz) sim-2] [Err] [SDFFeatures.cc:843] The geometry element of collision [left_hand] couldn't be created``, should I be worried?
-   - These are a known issue with Gazebo, and are safe to ignore.
+1. When I run Gazebo a bunch of errors print that say ``[ruby $(which gz) sim-2] [Err] [SDFFeatures.cc:843] The geometry element of collision [left_hand] couldn't be created``, should I be worried?
 
+    These are a known issue with Gazebo, and are safe to ignore.
+
+2. If Gazebo cannot find model uri, e.g. the terminal throws the following error
+    ```
+    ... Msg: Unable to find uri[model://asl_tb3_sim/models/turtlebot3_world]
+    ```
+
+    You need to rebuild `tb_ws` and make sure to include the environment variable `GZ_VERSION=garden`.
+    To do a clean rebuild, run the following command in a terminal.
+
+    ```sh
+    cd ~/tb_ws && rm -r build install log
+    GZ_VERSION=garden colcon build --symlink-install
+    ```
