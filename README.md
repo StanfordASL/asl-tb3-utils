@@ -2,7 +2,7 @@
 ASL Turtlebot 3 ROS2 utility packages
 
 ## Installation Guide
-1. Setup Ubuntu 22.04 following the guides for [MacOS]() or [Windows]() (TODO: empty link).
+1. Setup Ubuntu 22.04 following the guides for [MacOS]() or [Windows](docs/windows.md) (TODO: empty link).
 2. Install ROS2 **Humble** on Ubuntu 22.04 following this
    [guide](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html).
    - These, and the following, installation instructions require opening a terminal, and copy-pasting commands into that terminal. In Ubuntu, use CTRL+ALT+T to open the default terminal. Remember to copy all commands exactly and in order, or you may encounter errors! 
