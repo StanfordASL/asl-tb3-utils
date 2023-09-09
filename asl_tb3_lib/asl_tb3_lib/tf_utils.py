@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 from geometry_msgs.msg import Quaternion, Transform, Pose
 from asl_tb3_msgs.msg import TurtleBotState
@@ -90,3 +91,34 @@ def state_to_pose(state: TurtleBotState) -> Pose:
     p.orientation = yaw_to_quaternion(state.theta)
 
     return p
+
+def quaternion_from_euler(ai, aj, ak):
+    """ Converts euler angles to a quaternion
+
+    Args:
+        ai, aj, ak: Euler angles
+
+    Returns:
+        q: The quaternion representation
+    """
+    ai /= 2.0
+    aj /= 2.0
+    ak /= 2.0
+    ci = math.cos(ai)
+    si = math.sin(ai)
+    cj = math.cos(aj)
+    sj = math.sin(aj)
+    ck = math.cos(ak)
+    sk = math.sin(ak)
+    cc = ci*ck
+    cs = ci*sk
+    sc = si*ck
+    ss = si*sk
+
+    q = np.empty((4, ))
+    q[0] = cj*sc - sj*cs
+    q[1] = cj*ss + sj*cc
+    q[2] = cj*cs - sj*sc
+    q[3] = cj*cc + sj*ss
+
+    return q
