@@ -7,12 +7,14 @@ from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch.conditions import IfCondition
 
 
 def generate_launch_description():
     x_init = LaunchConfiguration("x_init")
     y_init = LaunchConfiguration("y_init")
     world = LaunchConfiguration("world")
+    use_slam_toolbox = LaunchConfiguration("use_slam_toolbox")
 
     default_world = PathJoinSubstitution([
         FindPackageShare("asl_tb3_sim"),
@@ -79,19 +81,21 @@ def generate_launch_description():
     )
 
     slam = Node(
-       parameters=[
-           PathJoinSubstitution([FindPackageShare("asl_tb3_driver"), "configs", "slam_params.yaml"]),
-           {"use_sim_time": True},
-       ],
-       package='slam_toolbox',
-       executable='async_slam_toolbox_node',
-       name='slam_toolbox',
+        parameters=[
+            PathJoinSubstitution([FindPackageShare("asl_tb3_driver"), "configs", "slam_params.yaml"]),
+            {"use_sim_time": True},
+        ],
+        package='slam_toolbox',
+        executable='async_slam_toolbox_node',
+        name='slam_toolbox',
+        condition=IfCondition(use_slam_toolbox),
     )
 
     return LaunchDescription([
         DeclareLaunchArgument("x_init", default_value="-2.0"),
         DeclareLaunchArgument("y_init", default_value="-0.5"),
         DeclareLaunchArgument("world", default_value=default_world),
+        DeclareLaunchArgument("use_slam_toolbox", default_value="true"),
         robot_state_pub,
         gz_launch,
         spawn_turtlebot,
