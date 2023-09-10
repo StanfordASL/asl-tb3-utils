@@ -24,6 +24,7 @@ def generate_launch_description():
                 "world": world,
                 "x_init": "1.0",
                 "y_init": "-0.5",
+                "use_slam_toolbox": "false",
             }.items(),
         )
     ])
