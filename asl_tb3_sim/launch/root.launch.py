@@ -34,11 +34,15 @@ def generate_launch_description():
         ],
     )
 
+    render_engine = "ogre2"
+    if "VMWARE" in os.environ:
+        render_engine = "ogre"
+
     gz_launch = IncludeLaunchDescription(
         PathJoinSubstitution([
             FindPackageShare("ros_gz_sim"), "launch", "gz_sim.launch.py",
         ]),
-        launch_arguments={"gz_args": ["-r ", world]}.items(),
+        launch_arguments={"gz_args": ["-r ", world, " --render-engine ", render_engine]}.items(),
     )
 
     spawn_turtlebot = Node(
