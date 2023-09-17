@@ -34,11 +34,16 @@ def generate_launch_description():
         ],
     )
 
+    gz_args = "-r "  # start simulation immediately
+    if "DISABLE_GUI" in os.environ:
+        gz_args += "-s "
+    if "INSIDE_VM" in os.environ:
+        os.environ["LIBGL_ALWAYS_SOFTWARE"] = "1"
     gz_launch = IncludeLaunchDescription(
         PathJoinSubstitution([
             FindPackageShare("ros_gz_sim"), "launch", "gz_sim.launch.py",
         ]),
-        launch_arguments={"gz_args": ["-r ", world]}.items(),
+        launch_arguments={"gz_args": [gz_args, world]}.items(),
     )
 
     spawn_turtlebot = Node(
