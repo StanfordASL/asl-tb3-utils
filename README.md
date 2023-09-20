@@ -5,7 +5,7 @@ ASL Turtlebot 3 ROS2 utility packages
 1. Setup Ubuntu 22.04 following the guides for [MacOS]() or [Windows](docs/windows.md) (TODO: empty link).
 2. Install ROS2 **Humble** on Ubuntu 22.04 following this
    [guide](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html).
-   - These, and the following, installation instructions require opening a terminal, and copy-pasting commands into that terminal. In Ubuntu, use CTRL+ALT+T to open the default terminal. Remember to copy all commands exactly and in order, or you may encounter errors! 
+   - These, and the following, installation instructions require opening a terminal, and copy-pasting commands into that terminal. In Ubuntu, use CTRL+ALT+T to open the default terminal. Remember to copy all commands exactly and in order, or you may encounter errors!
    - On the **Install ROS Packages** step, choose the Desktop Install (`sudo apt install ros-humble-desktop`).
 3. Install Gazebo **Garden** (ignore the comment lines starting with `#`).
    ```sh
@@ -16,7 +16,7 @@ ASL Turtlebot 3 ROS2 utility packages
    # Setup Gazebo keys and sources
    sudo wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
-   
+
    # Install Gazebo
    sudo apt-get update
    sudo apt-get install gz-garden
@@ -54,12 +54,26 @@ ASL Turtlebot 3 ROS2 utility packages
     ```
 6. Try starting ROS and Gazebo with a simulated TurtleBot to verify that everything is installed correctly. Use this command:
    ```sh
-   ros2 launch asl_tb3_sim root.launch.py 
+   ros2 launch asl_tb3_sim root.launch.py
    ```
    To close the simulator and ROS session after testing your installation enter CTRL+C in the terminal session where you entered the command above.
 
+## Environment Variables
+
+* `DISABLE_GUI` -- Set to 1 to disable Gazebo GUI. This can speed up simulation if running inside
+    VM or limited compute hardware.
+* `INSIDE_VM` -- Set to 1 to use software OpenGL. OpenGL implementation in VMWare and WSL does
+    not work very well with Gazebo. Set this env variable if you see flickering or
+    blank screen in Gazebo.
+
 ## Development Guide
-TODO
+1. Create a new branch.
+
+2. Commit and push changes to the new branch.
+
+3. Create a pull request and ask someone to review it.
+
+4. Merge after an approval review.
 
 ## F.A.Q.
 1. When I run Gazebo a bunch of errors print that say ``[ruby $(which gz) sim-2] [Err] [SDFFeatures.cc:843] The geometry element of collision [left_hand] couldn't be created``, should I be worried?
