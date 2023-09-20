@@ -100,7 +100,7 @@ class BaseController(Node):
         raise NotImplementedError("Calling abstract function")
 
 
-class BasePoseStabilizer(BaseController):
+class BaseHeadingController(BaseController):
     """ Student can inherit from this class to build a pose stabilization controller node
 
     This node takes target pose from /cmd_pose, and control the robot towards the target
