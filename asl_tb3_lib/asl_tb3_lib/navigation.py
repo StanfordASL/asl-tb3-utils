@@ -82,7 +82,7 @@ class NavMode(Enum):
     IDLE = 0    # robot does not move
     ALIGN = 1   # control angular velocity only to align orientation with the planned initial state
     TRACK = 2   # track planned trajectory using a tracking controller
-    PARK = 3    # use pose stabilization controller when close to the planned goal state
+    PARK = 3    # control angular velocity only to align orientation with the planned goal state
 
 
 class BaseNavigator(BaseController):
@@ -111,9 +111,8 @@ class BaseNavigator(BaseController):
         # parameters
         self.declare_parameter("theta_start_thresh", 0.05)  # threshold for heading controller
         self.declare_parameter("plan_thresh", 0.3)          # replan if at least this far from planned trajectory
-        self.declare_parameter("near_thresh", 0.2)          # threshold to switch to pose stabilization controller
-        self.declare_parameter("at_thresh", 0.02)           # maximum distance delta from goal
-        self.declare_parameter("at_thresh_theta", 0.05)     # maximum angle delta from goal
+        self.declare_parameter("near_thresh", 0.1)          # threshold to switch to NavMode.PARK
+        self.declare_parameter("at_thresh_theta", 0.02)     # maximum angle delta from goal
         self.declare_parameter("plan_resolution", 0.1)      # resolution for A* planner in [m]
         self.declare_parameter("plan_horizon", 10.0)        # maximum grid dimension for planning
 
@@ -154,7 +153,7 @@ class BaseNavigator(BaseController):
         self.publish_smooth_path()
 
         # no need to use heading controller if already aligned
-        if self.aligned():
+        if self.aligned(self.plan.desired_state(0.0)):
             self.plan_start_time = self.get_clock().now()
             self.switch_mode(NavMode.TRACK)
         else:
@@ -225,19 +224,7 @@ class BaseNavigator(BaseController):
         near_thresh = self.get_parameter("near_thresh").value
         return distance_linear(self.state, self.goal) < near_thresh
 
-    def at_goal(self) -> bool:
-        """ Check if the current state is at the goal state
-
-        Returns:
-            bool: True if the linear distance between current state and goal state
-                  is below some threshold, False otherwise
-        """
-        at_thresh = self.get_parameter("at_thresh").value
-        at_thresh_theta = self.get_parameter("at_thresh_theta").value
-        return distance_linear(self.state, self.goal) < at_thresh and \
-               distance_angular(self.state, self.goal) < at_thresh_theta
-
-    def aligned(self) -> bool:
+    def aligned(self, target: TurtleBotState) -> bool:
         """ Check if the current state is aligned to the initial planned state in orientation
 
         Returns:
@@ -245,7 +232,7 @@ class BaseNavigator(BaseController):
                   initial state is below some threshold
         """
         theta_start_thresh = self.get_parameter("theta_start_thresh").value
-        return distance_angular(self.state, self.plan.desired_state(0.0)) < theta_start_thresh
+        return distance_angular(self.state, target) < theta_start_thresh
 
     def close_to_plan(self) -> bool:
         """ Check whether the current state is staying close to the planned trajectory
@@ -270,7 +257,7 @@ class BaseNavigator(BaseController):
         """
         # state machine switch
         if self.mode == NavMode.ALIGN:
-            if self.aligned():
+            if self.aligned(self.plan.desired_state(0.0)):
                 self.plan_start_time = self.get_clock().now()
                 self.switch_mode(NavMode.TRACK)
         elif self.mode == NavMode.TRACK:
@@ -285,13 +272,13 @@ class BaseNavigator(BaseController):
                 self.is_planned = False
                 self.replan(self.goal)
         elif self.mode == NavMode.PARK:
-            if self.at_goal():
+            if self.aligned(self.goal):
                 self.is_planned = False
                 self.switch_mode(NavMode.IDLE)
 
         # compute control
         if self.mode == NavMode.ALIGN:
-            return self.compute_heading_control()
+            return self.compute_heading_control(self.state, self.plan.desired_state(0.0))
         elif self.mode == NavMode.TRACK:
             return self.compute_trajectory_tracking_control(
                 state=self.state,
@@ -299,7 +286,7 @@ class BaseNavigator(BaseController):
                 t=(self.get_clock().now() - self.plan_start_time).nanoseconds * 1e-9,
             )
         elif self.mode == NavMode.PARK:
-            return self.compute_pose_stabilize_control(self.state, self.goal)
+            return self.compute_heading_control(self.state, self.goal)
         else:   # NavMode.IDLE:
             return TurtleBotControl()
 
@@ -311,38 +298,14 @@ class BaseNavigator(BaseController):
         """
         return self.is_planned
 
-    def compute_heading_control(self) -> TurtleBotControl:
-        """ Compute only orientation target (used for NavMode.ALIGN)
-
-        Returns:
-            TurtleBotControl: control target
-        """
-        kp = 2.0  # control gain for heading controller
-        om_max = self.om_max
-
-        err = wrap_angle(self.plan.desired_state(0.0).theta - self.state.theta)
-        om = kp * err
-        om = np.clip(om, -om_max, om_max)
-
-        return TurtleBotControl(
-            v=0.0,
-            omega=om,
-        )
-
-    def compute_pose_stabilize_control(self,
+    def compute_heading_control(self,
         state: TurtleBotState,
         goal: TurtleBotState
     ) -> TurtleBotControl:
-        """ Compute control target using a pose stabilization controller.
-
-        HINT: you can copy your code from `compute_control_with_goal` in ealier sections
-
-        Args:
-            state (TurtleBotState): current robot state
-            goal (TurtleBotState): current goal state
+        """ Compute only orientation target (used for NavMode.ALIGN and NavMode.Park)
 
         Returns:
-            TurtleBotControl: control command
+            TurtleBotControl: control target
         """
         raise NotImplementedError("You need to implement this!")
 

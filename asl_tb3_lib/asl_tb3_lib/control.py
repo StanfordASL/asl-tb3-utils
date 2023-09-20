@@ -100,14 +100,14 @@ class BaseController(Node):
         raise NotImplementedError("Calling abstract function")
 
 
-class BasePoseStabilizer(BaseController):
-    """ Student can inherit from this class to build a pose stabilization controller node
+class BaseHeadingController(BaseController):
+    """ Student can inherit from this class to build a heading controller node
 
-    This node takes target pose from /cmd_pose, and control the robot towards the target
-    pose using a pose stabilization controller
+    This node takes target pose from /cmd_pose, and control the robot's orientation
+    towards the target pose orientation using a heading controller
     """
 
-    def __init__(self, node_name: str = "pose_stabilizer") -> None:
+    def __init__(self, node_name: str = "heading_controller") -> None:
         super().__init__(node_name)
 
         self.goal = TurtleBotState()
