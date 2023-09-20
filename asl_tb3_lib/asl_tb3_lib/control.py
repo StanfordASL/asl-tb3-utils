@@ -107,7 +107,7 @@ class BaseHeadingController(BaseController):
     towards the target pose orientation using a heading controller
     """
 
-    def __init__(self, node_name: str = "pose_stabilizer") -> None:
+    def __init__(self, node_name: str = "heading_controller") -> None:
         super().__init__(node_name)
 
         self.goal = TurtleBotState()
