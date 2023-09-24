@@ -200,7 +200,7 @@ class BaseNavigator(BaseController):
         )
 
         # replan if the new map updates causes collision in the original plan
-        if self.is_planned and not all([self.occupancy.is_free(s) for s in self.plan.path]):
+        if self.is_planned and not all([self.occupancy.is_free(s) for s in self.plan.path[1:]]):
             self.is_planned = False
             self.replan(self.goal)
 
