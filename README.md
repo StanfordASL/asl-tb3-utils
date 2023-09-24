@@ -2,12 +2,12 @@
 ASL Turtlebot 3 ROS2 utility packages
 
 ## Installation Guide
-1. Setup Ubuntu 22.04 following the guides for [MacOS]() or [Windows](docs/windows.md) (TODO: empty link).
-2. Install ROS2 **Humble** on Ubuntu 22.04 following this
+1. Install ROS2 **Humble** on Ubuntu 22.04 following this
    [guide](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html).
    - These, and the following, installation instructions require opening a terminal, and copy-pasting commands into that terminal. In Ubuntu, use CTRL+ALT+T to open the default terminal. Remember to copy all commands exactly and in order, or you may encounter errors!
-   - On the **Install ROS Packages** step, choose the Desktop Install (`sudo apt install ros-humble-desktop`).
-3. Install Gazebo **Garden** (ignore the comment lines starting with `#`).
+   - On the **Install ROS Packages** step, choose the ROS-Base Install (`sudo apt install ros-humble-ros-base`).
+   - Make sure to also install development tools (`sudo apt install ros-dev-tools`).
+2. Install Gazebo **Garden** (ignore the comment lines starting with `#`).
    ```sh
    # Install dependencies
    sudo apt-get update
@@ -21,11 +21,11 @@ ASL Turtlebot 3 ROS2 utility packages
    sudo apt-get update
    sudo apt-get install gz-garden
    ```
-4. Initialize `rosdep` (can skip this step if done earlier)
+3. Initialize `rosdep` (can skip this step if done earlier)
     ```sh
     sudo rosdep init
     ```
-5. Set up a ROS2 workspace by running the following scripts (ignore the comment lines starting with `#`)
+4. Set up a ROS2 workspace by running the following scripts (ignore the comment lines starting with `#`)
     ```sh
     # install apt depedencies
     sudo apt install git
@@ -50,9 +50,10 @@ ASL Turtlebot 3 ROS2 utility packages
     # include the setup script (replace bash with zsh if using zsh)
     echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
     echo "source \$HOME/tb_ws/install/local_setup.bash" >> ~/.bashrc
+    echo "alias update_tb_ws=\$HOME/tb_ws/src/asl-tb3-utils/scripts/update.sh" >> ~/.bashrc
     source ~/.bashrc
     ```
-6. Try starting ROS and Gazebo with a simulated TurtleBot to verify that everything is installed correctly. Use this command:
+5. Try starting ROS and Gazebo with a simulated TurtleBot to verify that everything is installed correctly. Use this command:
    ```sh
    ros2 launch asl_tb3_sim root.launch.py
    ```
@@ -67,6 +68,11 @@ ASL Turtlebot 3 ROS2 utility packages
     blank screen in Gazebo.
 
 ## Development Guide
+
+### Pull Latest and Re-Build Local Workspace
+Run `update_tb_ws` in your terminal.
+
+### Make Contribution to This Repository
 1. Create a new branch.
 
 2. Commit and push changes to the new branch.

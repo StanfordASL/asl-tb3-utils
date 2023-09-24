@@ -35,5 +35,6 @@ GZ_VERSION=garden colcon build --symlink-install
 echo "Updating ~/.zshrc to include setup scripts"
 echo "source /opt/ros/humble/setup.zsh" >> ~/.zshrc
 echo "source \$HOME/tb_ws/install/local_setup.zsh" >> ~/.zshrc
+echo "alias update_tb_ws=\$HOME/tb_ws/src/asl-tb3-utils/scripts/update.sh" >> ~/.zshrc
 
 echo "Done!"
