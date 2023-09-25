@@ -43,6 +43,11 @@ class BaseController(Node):
         return self.get_parameter("om_max").value
 
     def state_callback(self, msg: TurtleBotState) -> None:
+        """ callback triggered when receiving latest turtlebot state
+
+        Args:
+            msg (TurtleBotState): latest turtlebot state
+        """
         self.state = msg
 
     def publish_control(self) -> None:

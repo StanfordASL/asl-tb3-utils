@@ -13,7 +13,8 @@ from asl_tb3_lib.tf_utils import transform_to_state
 
 class StatePublisher(Node):
     """StatePublisher
-    This node reads from TF tree and publish robot pose as TurtleBotState messages at 100Hz.
+    This node reads from TF tree and publish robot pose to /state channel as
+    TurtleBotState messages (at 100Hz).
     """
     def __init__(self) -> None:
         super().__init__("state_publisher")

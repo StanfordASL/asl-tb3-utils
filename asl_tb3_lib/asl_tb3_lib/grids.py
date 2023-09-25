@@ -58,12 +58,28 @@ class StochOccupancyGrid2D(object):
         self.thresh = thresh
 
     def state2grid(self, state_xy: np.ndarray) -> np.ndarray:
+        """ convert real state coordinates to integer grid indices
+
+        Args:
+            state_xy (np.ndarray): real state coordinates (x, y)
+
+        Returns:
+            np.ndarray: quantized 2D grid indices (kx, ky)
+        """
         state_snapped_xy = snap_to_grid(state_xy, self.resolution)
         grid_xy = ((state_snapped_xy - self.origin_xy) / self.resolution).astype(int)
 
         return grid_xy
 
     def grid2state(self, grid_xy: np.ndarray) -> np.ndarray:
+        """ convert integer grid indices to real state coordinates
+
+        Args:
+            grid_xy (np.ndarray): integer grid indices (kx, ky)
+
+        Returns:
+            np.ndarray: real state coordinates (x, y)
+        """
         return (grid_xy * self.resolution + self.origin_xy).astype(float)
 
     def is_free(self, state_xy: np.ndarray) -> bool:
