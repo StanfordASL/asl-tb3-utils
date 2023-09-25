@@ -1,4 +1,5 @@
 import numpy as np
+import typing as T
 
 from geometry_msgs.msg import Twist
 from rclpy.node import Node
@@ -14,8 +15,7 @@ class BaseController(Node):
     def __init__(self, node_name: str) -> None:
         super().__init__(node_name)
 
-        self.state_ready = False        # set to true when the first state message comes in
-        self.state = TurtleBotState()
+        self.state: T.Optional[TurtleBotState] = None
 
         self.state_sub = self.create_subscription(TurtleBotState, "/state", self.state_callback, 10)
         self.cmd_vel_pub = self.create_publisher(Twist, "/cmd_vel", 10)
@@ -43,12 +43,11 @@ class BaseController(Node):
         return self.get_parameter("om_max").value
 
     def state_callback(self, msg: TurtleBotState) -> None:
-        self.state_ready = True
         self.state = msg
 
     def publish_control(self) -> None:
         """ Main loop for publishing control commands """
-        if not self.state_ready:
+        if self.state is None:
             self.get_logger().debug("Latest pose not yet ready")
             return
 
