@@ -7,6 +7,7 @@ from geometry_msgs.msg import PoseStamped
 from nav_msgs.msg import OccupancyGrid, Path
 from rclpy.duration import Duration
 from scipy.interpolate import splev
+from std_msgs.msg import Bool
 
 from asl_tb3_msgs.msg import TurtleBotState, TurtleBotControl
 from asl_tb3_lib.control import BaseController
@@ -105,6 +106,7 @@ class BaseNavigator(BaseController):
 
         self.cmd_nav_sub = self.create_subscription(TurtleBotState, "/cmd_nav", self.replan, 10)
         self.map_sub = self.create_subscription(OccupancyGrid, "/map", self.map_callback, 10)
+        self.nav_success_pub = self.create_publisher(Bool, "/nav_success", 10)
         self.planned_path_pub = self.create_publisher(Path, "/planned_path", 10)
         self.smoothed_path_pub = self.create_publisher(Path, "/smoothed_path", 10)
 
@@ -149,6 +151,7 @@ class BaseNavigator(BaseController):
         if new_plan is None:
             self.is_planned = False
             self.get_logger().warn("Replanning failed")
+            self.nav_success_pub.publish(Bool(data=False))
             return
 
         # planning succeeded
@@ -203,7 +206,7 @@ class BaseNavigator(BaseController):
             resolution=msg.info.resolution,
             size_xy=np.array([msg.info.width, msg.info.height]),
             origin_xy=np.array([msg.info.origin.position.x, msg.info.origin.position.y]),
-            window_size=7,
+            window_size=9,
             probs=msg.data,
         )
 
@@ -271,6 +274,7 @@ class BaseNavigator(BaseController):
         elif self.mode == NavMode.TRACK:
             if self.near_goal():
                 self.switch_mode(NavMode.PARK)
+                self.nav_success_pub.publish(Bool(data=True))
             elif self.get_clock().now() - self.plan_start_time > Duration(seconds=self.plan.duration):
                 self.get_logger().info("Replanning because out of time or stuck")
                 self.is_planned = False
