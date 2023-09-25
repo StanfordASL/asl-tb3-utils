@@ -57,6 +57,15 @@ class StochOccupancyGrid2D(object):
         self.window_size = window_size
         self.thresh = thresh
 
+    def state2grid(self, state_xy: np.ndarray) -> np.ndarray:
+        state_snapped_xy = snap_to_grid(state_xy, self.resolution)
+        grid_xy = ((state_snapped_xy - self.origin_xy) / self.resolution).astype(int)
+
+        return grid_xy
+
+    def grid2state(self, grid_xy: np.ndarray) -> np.ndarray:
+        return (grid_xy * self.resolution + self.origin_xy).astype(float)
+
     def is_free(self, state_xy: np.ndarray) -> bool:
         """ Check whether a state is free or occupied
 
@@ -67,8 +76,7 @@ class StochOccupancyGrid2D(object):
             bool: True if free, False if occupied
         """
         # combine the probabilities of each cell by assuming independence of each estimation
-        state_xy = snap_to_grid(state_xy, self.resolution)
-        grid_xy = ((state_xy - self.origin_xy) / self.resolution).astype(int)
+        grid_xy = self.state2grid(state_xy)
 
         half_size = int(round((self.window_size-1)/2))
         grid_xy_lower = np.maximum(0, grid_xy - half_size)
