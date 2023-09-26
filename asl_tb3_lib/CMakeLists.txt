@@ -13,6 +13,7 @@ ament_python_install_package(${PROJECT_NAME})
 
 install(PROGRAMS
     scripts/rviz_goal_relay.py
+    scripts/state_publisher.py
     DESTINATION lib/${PROJECT_NAME}
 )
 

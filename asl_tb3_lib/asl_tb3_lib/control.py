@@ -1,11 +1,9 @@
 import numpy as np
+import typing as T
 
 from geometry_msgs.msg import Twist
 from rclpy.node import Node
 from rclpy.time import Time
-from tf2_ros import TransformException
-from tf2_ros.buffer import Buffer
-from tf2_ros.transform_listener import TransformListener
 
 from asl_tb3_msgs.msg import TurtleBotState, TurtleBotControl
 from asl_tb3_lib.tf_utils import transform_to_state
@@ -17,13 +15,9 @@ class BaseController(Node):
     def __init__(self, node_name: str) -> None:
         super().__init__(node_name)
 
-        self.state_ready = False        # set to true when the first pose message comes in
-        self.state = TurtleBotState()
+        self.state: T.Optional[TurtleBotState] = None
 
-        # TF datastructure for getting relative poses from the TF tree
-        self.tf_buffer = Buffer()
-        self.tf_listener = TransformListener(self.tf_buffer, self)
-
+        self.state_sub = self.create_subscription(TurtleBotState, "/state", self.state_callback, 10)
         self.cmd_vel_pub = self.create_publisher(Twist, "/cmd_vel", 10)
         self.control_timer = self.create_timer(0.1, self.publish_control)  # 10 Hz control loop
 
@@ -48,19 +42,17 @@ class BaseController(Node):
         """
         return self.get_parameter("om_max").value
 
-    def try_get_latest_pose(self) -> None:
-        """ Try setting self.state with the latest pose, no-op if latest pose is not available """
-        try:
-            t = self.tf_buffer.lookup_transform("map", "base_footprint", Time())
-            self.state = transform_to_state(t.transform)
-            self.state_ready = True
-        except TransformException as e:
-            pass
+    def state_callback(self, msg: TurtleBotState) -> None:
+        """ callback triggered when receiving latest turtlebot state
+
+        Args:
+            msg (TurtleBotState): latest turtlebot state
+        """
+        self.state = msg
 
     def publish_control(self) -> None:
         """ Main loop for publishing control commands """
-        self.try_get_latest_pose()
-        if not self.state_ready:
+        if self.state is None:
             self.get_logger().debug("Latest pose not yet ready")
             return
 
