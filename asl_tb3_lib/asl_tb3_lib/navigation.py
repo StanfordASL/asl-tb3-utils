@@ -133,6 +133,10 @@ class BaseNavigator(BaseController):
             self.switch_mode(NavMode.PARK)
             return
 
+        # stop the robot before planning with A* as it can take quite long to finish
+        self.stop()
+
+        # plan with A*
         new_plan = self.compute_trajectory_plan(
             state=self.state,
             goal=goal,
@@ -140,15 +144,19 @@ class BaseNavigator(BaseController):
             resolution=self.get_parameter("plan_resolution").value,
             horizon=self.get_parameter("plan_horizon").value,
         )
+
+        # planning failed
         if new_plan is None:
             self.is_planned = False
             self.get_logger().warn("Replanning failed")
             return
 
+        # planning succeeded
         self.is_planned = True
         self.plan = new_plan
         self.get_logger().info(f"Replanned to {goal}")
 
+        # publish planned and smoothed trajectory for visualization in RVIZ
         self.publish_planned_path()
         self.publish_smooth_path()
 
@@ -200,7 +208,7 @@ class BaseNavigator(BaseController):
         )
 
         # replan if the new map updates causes collision in the original plan
-        if self.is_planned and not all([self.occupancy.is_free(s) for s in self.plan.path]):
+        if self.is_planned and not all([self.occupancy.is_free(s) for s in self.plan.path[1:]]):
             self.is_planned = False
             self.replan(self.goal)
 

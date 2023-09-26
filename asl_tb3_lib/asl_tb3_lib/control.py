@@ -79,6 +79,10 @@ class BaseController(Node):
         twist.angular.z = np.clip(control.omega, -om_max, om_max)
         self.cmd_vel_pub.publish(twist)
 
+    def stop(self) -> None:
+        """ send zero control to stop the robot """
+        self.cmd_vel_pub.publish(Twist())
+
     def can_compute_control(self) -> bool:
         """ Check whether or not control can be computed at the current time
 
