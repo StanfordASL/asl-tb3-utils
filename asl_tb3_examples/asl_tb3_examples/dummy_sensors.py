@@ -13,4 +13,4 @@ def get_heart_beat() -> None:
     print(colored("[Heart Beat]: alive!", "red"))
 
 def get_joystick_data() -> None:
-    print(colored("[Joystick]: new input", "cyan"))
+    print(colored("[Joystick]: new input", "yellow"))
