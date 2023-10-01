@@ -8,7 +8,7 @@ sudo apt install curl -y
 
 ## Automatic Installation
 
-1. If your your Ubuntu 22.04 has less than 8GB RAM, you need to increase swap size by running
+1. If your Ubuntu 22.04 has less than 8GB RAM, you need to increase swap size by running
 the following command
 
     ```bash
