@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
 
-set -e
-
 echo "Installing apt dependencies..."
 sudo apt -qq update && sudo apt upgrade -y
 sudo apt install git curl software-properties-common lsb-release wget gnupg git \
