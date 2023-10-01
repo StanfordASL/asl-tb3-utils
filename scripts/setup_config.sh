@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 echo "Install apt dependencies"
-sudo apt install -qq git python3-dev python3-venv cmake build-essential vim tmux htop -y
+sudo apt install -qq git python3-dev python3-venv cmake build-essential vim tmux htop gh -y
 
 echo "Symlink dot files"
 mkdir -p ~/.colcon

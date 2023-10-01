@@ -3,7 +3,7 @@
 echo "Installing apt dependencies..."
 sudo apt -qq update && sudo apt upgrade -y
 sudo apt install git curl software-properties-common lsb-release wget gnupg git \
-                 python3-dev python3-venv cmake build-essential vim tmux htop -y
+                 python3-dev python3-venv cmake build-essential vim tmux htop gh -y
 
 echo "Setting up config and vim"
 mkdir -p ~/.colcon
