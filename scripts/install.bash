@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
+set -e
+
 echo "Installing apt dependencies..."
 sudo apt -qq update && sudo apt upgrade -y
 sudo apt install git curl software-properties-common lsb-release wget gnupg git \
-                 python3-dev python3-venv cmake build-essentials vim tmux htop -y
+                 python3-dev python3-venv cmake build-essential vim tmux htop -y
 
 echo "Setting up config and vim"
 mkdir -p ~/.colcon
@@ -13,7 +15,7 @@ ln -s $HOME/configs/tmux/.tmux.conf ~
 ln -s $HOME/configs/colcon/defaults.yaml ~/.colcon
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-vim +'PlugInstall --sync' +qa
+vim -E +'PlugInstall --sync' +qa
 
 echo "Installing ROS2 Humble..."
 sudo add-apt-repository universe -y
