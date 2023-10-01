@@ -1,8 +1,10 @@
 #!/usr/bin/env sh
 
+set -e
+
 echo "Install apt dependencies"
 sudo apt -qq update && sudo apt upgrade -y
-sudo apt install -qq git python3-dev python3-venv cmake build-essentials vim tmux htop
+sudo apt install -qq git python3-dev python3-venv cmake build-essential vim tmux htop
 
 echo "Symlink dot files"
 mkdir -p ~/.colcon
@@ -14,7 +16,7 @@ ln -s $HOME/configs/colcon/defaults.yaml ~/.colcon
 echo "Configure Vim"
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-vim +'PlugInstall --sync' +qa
+vim -E +'PlugInstall --sync' +qa
 
 echo "Rebuild workspace"
 update_tb_ws
