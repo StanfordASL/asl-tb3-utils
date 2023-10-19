@@ -12,5 +12,6 @@ cd ~/tb_ws/src/asl-tb3-driver
 git checkout main && git pull
 
 echo "Re-building workspace"
+rosdep update && rosdep install --from-paths ~/tb_ws/src -r -i -y
 cd ~/tb_ws
 GZ_VERSION=garden colcon build --symlink-install

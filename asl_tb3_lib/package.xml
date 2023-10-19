@@ -16,6 +16,7 @@
   <exec_depend>python3-numpy</exec_depend>
   <exec_depend>python3-scipy</exec_depend>
   <exec_depend>rclpy</exec_depend>
+  <exec_depend>rqt_reconfigure</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
 
   <exec_depend>asl_tb3_msgs</exec_depend>
