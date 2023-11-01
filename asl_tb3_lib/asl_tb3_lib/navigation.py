@@ -206,7 +206,7 @@ class BaseNavigator(BaseController):
             resolution=msg.info.resolution,
             size_xy=np.array([msg.info.width, msg.info.height]),
             origin_xy=np.array([msg.info.origin.position.x, msg.info.origin.position.y]),
-            window_size=9,
+            window_size=11,
             probs=msg.data,
         )
 
